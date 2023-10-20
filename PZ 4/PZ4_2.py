@@ -1,10 +1,17 @@
-N = int(input("Введите целое число: "))
+#Дано целое число N. Используя операции деления нацело и взятия остатка
+# от деления, найти число, полученное при прочтении числа N справа налево.
+number = input("Введите число:")
 
-try:
-    if N <= 0:
-        raise ValueError
-except ValueError:
-    N = int(input("Некорректный ввод! Введите целое число больше 0:"))
+while type(number) != int:
+    try:
+        number = int(number)
+    except ValueError:
+        print('Неправильно ввели!')
+        number = input('Введите число: ')
 
-reversed_number = N // 10 % 10
-print("Число, полученное при прочтении числа N справа налево:", reversed_number)
+reversed_n = 0
+while number != 0: #пока число не равно нулю(пока не закончились цифры)
+    reversed_n = reversed_n * 10 + (number % 10) #Добавляем цифру к обратному числу
+    number //= 10  #избавляемся от последней цифры для дальнейшей работы цикла
+
+print("Перевёрнутое число:", reversed_n)
