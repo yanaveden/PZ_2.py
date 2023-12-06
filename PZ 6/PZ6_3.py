@@ -2,8 +2,7 @@
 # его минимальным и максимальным элементами, включая минимальный и максимальный элементы
 import random
 
-
-def reverse_elements_between_min_and_max(arr):
+def reverse(arr):
     min_index = arr.index(min(arr))
     max_index = arr.index(max(arr))
     start_index = min([min_index, max_index])
@@ -20,5 +19,5 @@ while i < N:
 print("Список:", G)
 print('Максимальный элемент списка: ', max(G))
 print('Минимальный элемент списка: ', min(G))
-G = reverse_elements_between_min_and_max(G)
+G = reverse(G)
 print("Список после перестановки:", G)
