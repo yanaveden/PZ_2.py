@@ -3,6 +3,7 @@
 
 import random
 
+
 def find_index(arr):
     n = len(arr)
     last_max = 0
