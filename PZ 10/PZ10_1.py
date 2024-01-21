@@ -1,19 +1,18 @@
 #Определить в каких магазинах можно приобрести книги Маяковского
 
-Magistr = {'Лермонтов', 'Достоевский', 'Маяковский', 'Тютчев'}
+Magistr = {'Лермонтов', 'Достоевский', 'Пушкин', 'Тютчев'}
 DomKnigi = {'Толстой', 'Грибоедов', 'Чехов', 'Пушкин'}
-BookMarket = {'Пушкин', 'Достоевский', 'Достоевский'}
+BookMarket = {'Пушкин', 'Достоевский', 'Маяковский'}
 Gallereya = {'Чехов', 'Пушкин', 'Тютчев'}
 
-stores_with_mayakovsky = set()
 
+print('Книги Маяковского можно приобрести в следующих магазинах:')
 if 'Маяковский' in Magistr:
-    stores_with_mayakovsky.add('Магистр')
+    print('Магистр')
 if 'Маяковский' in DomKnigi:
-    stores_with_mayakovsky.add('ДомКники')
+    print('ДомКниги')
 if 'Маяковский' in BookMarket:
-    stores_with_mayakovsky.add('Букмаркет')
+    print('БукМаркет')
 if 'Маяковский' in Gallereya:
-    stores_with_mayakovsky.add('Галерея')
+    print('Галлерея')
 
-print("Книги Маяковского можно приобрести в следующих магазинах:", stores_with_mayakovsky)
