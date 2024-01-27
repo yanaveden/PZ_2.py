@@ -1,12 +1,16 @@
-MAGISTER = {'Лермонтов', 'Достоевский', 'Пушкин', 'Тютчев'}
-DOM_KNIGI = {'Толстой', 'Грибоедов', 'Чехов', 'Пушкин'}
-BOOK_MARKET = {'Пушкин', 'Достоевский', 'Маяковский'}
-GALLERY = {'Чехов', 'Пушкин', 'Тютчев'}
+Magistr = {'Лермонтов', 'Достоевский', 'Пушкин', 'Тютчев'}
+DomKnigi = {'Толстой', 'Грибоедов', 'Чехов', 'Пушкин'}
+BookMarket = {'Пушкин', 'Достоевский', 'Маяковский'}
+Gallereya = {'Чехов', 'Пушкин', 'Тютчев'}
+mayakovski_books = []
 
-kniga_mayak = "Маяковский"
+if 'Маяковский' in Magistr:
+    mayakovski_books.append('Магистр')
+if 'Маяковский' in DomKnigi:
+    mayakovski_books.append('ДомКниги')
+if 'Маяковский' in BookMarket:
+    mayakovski_books.append('Букмаркет')
+if 'Маяковский' in Gallereya:
+    mayakovski_books.append('Галлерея')
 
-mayakovski_byu = [name for name, s in
-                  [("Магистр", MAGISTER), ("ДомКниги", DOM_KNIGI), ("БукМаркет", BOOK_MARKET), ("Галерея", GALLERY)] if
-                  kniga_mayak in s]
-
-print(f"Книги Маяковского можно приобрести в следующих магазинах: {', '.join(mayakovski_byu)}\n")
+print(f"Книги Маяковского можно приобрести в следующих магазинах: {', '.join(mayakovski_books)}\n")
