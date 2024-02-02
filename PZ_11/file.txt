@@ -1,0 +1,14 @@
+Initial data: [4, 4, 9, 4, 7, 0, 3, 4, 5, 5]
+Number of elements: 10
+Minimum element:: 0
+Elements multiplied by the maximum element:
+36
+36
+81
+36
+63
+0
+27
+36
+45
+45
