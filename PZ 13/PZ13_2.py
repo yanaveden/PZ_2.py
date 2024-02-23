@@ -1,22 +1,14 @@
 # Если в матрице имеются положительные элементы, то вывести TRUE, иначе FALSE.
+import random
+
 
 def elements(matrix):
-    for row in matrix:
-        for element in row:
-            if element > 0:
-                return True
-    return False
+    return any(any(element > 0 for element in row) for row in matrix)
 
-matrix = [
-    [-1, -2, -3],
-    [-4, -5, -6],
-    [-7, -8, 9]
-]
 
-print("Исходная матрица:")
-for row in matrix:
-    print(row)
+N = int(input("Введите размерность матрицы: "))
+matrix = [[random.randint(-10, 10) for el in range(N)] for row in range(N)]
 
-result = elements(matrix)
-print("\nРезультат проверки на наличие положительных элементов:")
-print(result)
+print("Матрица:")
+[print(i) for i in matrix]
+print(f"Результат проверки на наличие положительных элементов: {elements(matrix)}")
