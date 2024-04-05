@@ -5,39 +5,96 @@
 
 import sqlite3
 
-# Создание соединения с базой данных
 conn = sqlite3.connect('library.db')
-c = conn.cursor()
+cursor = conn.cursor()
 
-# Создание таблицы Каталог
-c.execute('''CREATE TABLE IF NOT EXISTS Catalog
-                 (book_code TEXT PRIMARY KEY, genre TEXT, country TEXT, series TEXT, author TEXT, title TEXT, year INTEGER, annotation TEXT)''')
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS katalog (
+    id_knigi INTEGER PRIMARY KEY AUTOINCREMENT,
+    genre TEXT,
+    country TEXT,
+    seria INTEGER,
+    author TEXT,
+    name_knigi TEXT,
+    god INTEGER,
+    annotation TEXT
+)
+''')
 
-# Функция для добавления новой книги
-def add_book(book_code, genre, country, series, author, title, year, annotation):
-    c.execute("INSERT INTO Catalog VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (book_code, genre, country, series, author, title, year, annotation))
+knigi = [
+    (None, "Фантастика", "Россия", 1, "Аркадий и Борис Стругацкие", "Хромая судьба", 1965, "История о космической экспедиции, которая терпит крушение на неизвестной планете."),
+    (None, "Детектив", "США", 2, "Агата Кристи", "Десять негритят", 1939, "Классический детектив о загадочных убийствах на острове."),
+    (None, "Фэнтези", "Великобритания", 3, "Дж. Р. Р. Толкин", "Властелин колец", 1954, "Эпическая сага о кольце власти и приключениях хоббита Фродо."),
+    (None, "Роман", "Франция", 4, "Виктор Гюго", "Отверженные", 1862, "История борьбы бывшего каторжника Жана Вальжана за справедливость."),
+    (None, "Драма", "Греция", 5, "Софокл", "Царь Эдип", -458, "Трагедия о проклятии Царя Эдипа и его попытках избежать судьбы."),
+    (None, "Приключения", "Италия", 6, "Александр Дюма", "Граф Монте-Кристо", 1844, "Роман о мести и приключениях Эдмонда Дантеса."),
+    (None, "Юмор", "США", 7, "Марк Твен", "Приключения Тома Сойера", 1876, "Приключенческий роман о мальчике Томе и его друзьях."),
+    (None, "Ужасы", "Ирландия", 8, "Брэм Стокер", "Дракула", 1897, "Классический роман о вампире Графе Дракуле и его преследователе Ван Хельсинге."),
+    (None, "Научная фантастика", "США", 9, "Филип К. Дик", "Мечтают ли андроиды об электроовцах?", 1968, "Роман о мире, где андроиды и люди сосуществуют."),
+    (None, "Исторический роман", "Великобритания", 10, "Джордж Р. Р. Мартин", "Игра престолов", 1996, "Эпическая сага о борьбе за Железный Трон в вымышленном мире."),
+]
+
+cursor.executemany('''
+INSERT INTO katalog (id_knigi, genre, country, seria, author, name_knigi, god, annotation)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+''', knigi)
+
+def dropTable():
+    cursor.execute('DROP TABLE IF EXISTS katalog')
     conn.commit()
-    print("Книга успешно добавлена в каталог.")
 
-# Функция для поиска книги по коду
-def search_book(book_code):
-    c.execute("SELECT * FROM Catalog WHERE book_code=?", (book_code,))
-    book = c.fetchone()
-    if book:
-        print(f"Код книги: {book[0]}")
-        print(f"Жанр: {book[1]}")
-        print(f"Страна издания: {book[2]}")
-        print(f"Серия: {book[3]}")
-        print(f"Автор: {book[4]}")
-        print(f"Название книги: {book[5]}")
-        print(f"Год выпуска: {book[6]}")
-        print(f"Аннотация: {book[7]}")
-    else:
-        print("Книга не найдена в каталоге.")
+def getkniga():
+    cursor.execute('SELECT * FROM katalog')
+    return cursor.fetchall()
 
-# Пример использования
-add_book("B001", "Фантастика", "США", "Звездные войны", "Джордж Лукас", "Новая надежда", 1977, "Эпическая космическая опера...")
-search_book("B001")
+for knigi in getkniga():
+    print(knigi)
 
-# Закрытие соединения с базой данных
+conn.commit()
 conn.close()
+
+# Поиск
+def find_book_by_name(book_name):
+    cursor.execute("SELECT * FROM katalog WHERE name_knigi=?", (book_name,))
+    return cursor.fetchone()
+
+def find_books_by_author_and_country(author, country):
+    cursor.execute("SELECT * FROM katalog WHERE author=? AND country=?", (author, country))
+    return cursor.fetchall()
+
+def find_books_by_genre(genre):
+    cursor.execute("SELECT * FROM katalog WHERE genre=?", (genre,))
+    return cursor.fetchall()
+
+# Удаление
+def delete_book_by_name(book_name):
+    cursor.execute("DELETE FROM katalog WHERE name_knigi=?", (book_name,))
+    conn.commit()
+
+def delete_books_by_author_and_country(author, country):
+    cursor.execute("DELETE FROM katalog WHERE author=? AND country=?", (author, country))
+    conn.commit()
+
+def delete_books_by_genre(genre):
+    cursor.execute("DELETE FROM katalog WHERE genre=?", (genre,))
+    conn.commit()
+
+# Редактирование
+def update_book_year_by_name(book_name, new_year):
+    cursor.execute("UPDATE katalog SET god=? WHERE name_knigi=?", (new_year, book_name))
+    conn.commit()
+
+def update_books_genre_by_author_and_country(author, country, new_genre):
+    cursor.execute("UPDATE katalog SET genre=? WHERE author=? AND country=?", (new_genre, author, country))
+    conn.commit()
+
+def update_books_annotation_by_genre(genre, new_annotation):
+    cursor.execute("UPDATE katalog SET annotation=? WHERE genre=?", (new_annotation, genre))
+    conn.commit()
+
+
+
+
+
+
+
