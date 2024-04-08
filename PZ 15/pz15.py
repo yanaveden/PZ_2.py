@@ -3,9 +3,9 @@
 # книгах и следующей структурой записи: Код книги, Жанр, Страна издания, Серия, Автор,
 # Название книги, Год выпуска, Аннотация.
 
-import sqlite3
+import sqlite3 as sq
 
-conn = sqlite3.connect('library.db')
+conn = sq.connect('library.db')
 cursor = conn.cursor()
 
 cursor.execute('''
@@ -34,63 +34,66 @@ knigi = [
     (None, "Исторический роман", "Великобритания", 10, "Джордж Р. Р. Мартин", "Игра престолов", 1996, "Эпическая сага о борьбе за Железный Трон в вымышленном мире."),
 ]
 
-cursor.executemany('''
-INSERT INTO katalog (id_knigi, genre, country, seria, author, name_knigi, god, annotation)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-''', knigi)
+with sq.connect('library.db') as con:
+    cursor.executemany("INSERT INTO katalog VALUES (?, ?, ?, ?, ?, ?, ?, ?)", knigi)
 
-def dropTable():
-    cursor.execute('DROP TABLE IF EXISTS katalog')
-    conn.commit()
 
 def getkniga():
     cursor.execute('SELECT * FROM katalog')
     return cursor.fetchall()
 
+
 for knigi in getkniga():
     print(knigi)
 
-conn.commit()
-conn.close()
+with sq.connect('library.db') as con:
+    cursor.execute("SELECT * FROM katalog WHERE god = 1844")
+    result = cursor.fetchall()
+    print(result)
 
-# Поиск
-def find_book_by_name(book_name):
-    cursor.execute("SELECT * FROM katalog WHERE name_knigi=?", (book_name,))
-    return cursor.fetchone()
+with sq.connect('library.db') as con:
+    cursor.execute("SELECT * FROM katalog WHERE author='Брэм Стокер' AND country='Ирландия'")
+    result = cursor.fetchall()
+    print(result)
 
-def find_books_by_author_and_country(author, country):
-    cursor.execute("SELECT * FROM katalog WHERE author=? AND country=?", (author, country))
-    return cursor.fetchall()
+with sq.connect('library.db') as con:
+    cursor.execute("SELECT * FROM katalog WHERE genre='Фантастика'")
+    result = cursor.fetchall()
+    print(result)
 
-def find_books_by_genre(genre):
-    cursor.execute("SELECT * FROM katalog WHERE genre=?", (genre,))
-    return cursor.fetchall()
+with sq.connect('library.db') as con:
+    cursor.execute("DELETE FROM katalog WHERE name_knigi='Властелин колец'")
+    result = cursor.fetchall()
+    print(result)
 
-# Удаление
-def delete_book_by_name(book_name):
-    cursor.execute("DELETE FROM katalog WHERE name_knigi=?", (book_name,))
-    conn.commit()
+with sq.connect('library.db') as con:
+    cursor.execute("DELETE FROM katalog WHERE author='Брэм Стокер' AND country='Ирландия'")
+    result = cursor.fetchall()
+    print(result)
 
-def delete_books_by_author_and_country(author, country):
-    cursor.execute("DELETE FROM katalog WHERE author=? AND country=?", (author, country))
-    conn.commit()
+with sq.connect('library.db') as con:
+    cursor.execute("DELETE FROM katalog WHERE genre='Детектив'")
+    result = cursor.fetchall()
+    print(result)
 
-def delete_books_by_genre(genre):
-    cursor.execute("DELETE FROM katalog WHERE genre=?", (genre,))
-    conn.commit()
 
-# Редактирование
-def update_book_year_by_name(book_name, new_year):
-    cursor.execute("UPDATE katalog SET god=? WHERE name_knigi=?", (new_year, book_name))
-    conn.commit()
+with sq.connect('library.db') as con:
+    cursor.execute("UPDATE katalog SET god=? WHERE name_knigi=?", ('1970', 'Хромая судьба'))
+    result = cursor.fetchall()
+    print(result)
 
-def update_books_genre_by_author_and_country(author, country, new_genre):
-    cursor.execute("UPDATE katalog SET genre=? WHERE author=? AND country=?", (new_genre, author, country))
-    conn.commit()
+with sq.connect('library.db') as con:
+    cursor.execute("UPDATE katalog SET genre='Роман' WHERE author='Джордж Р. Р. Мартин' AND country='Великобритания' ")
+    result = cursor.fetchall()
+    print(result)
 
-def update_books_annotation_by_genre(genre, new_annotation):
-    cursor.execute("UPDATE katalog SET annotation=? WHERE genre=?", (new_annotation, genre))
-    conn.commit()
+with sq.connect('library.db') as con:
+    cursor.execute("UPDATE katalog SET annotation='Том Сойер - весёлый мальчишка из американского городка на Миссисипи' WHERE name_knigi='Приключения Тома Сойера'")
+    result = cursor.fetchall()
+    print(result)
+
+for knigi in getkniga():
+    print(knigi)
 
 
 
