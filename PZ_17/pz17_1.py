@@ -110,5 +110,4 @@ cancel_button.grid(row=13, column=2, padx=10, pady=10, sticky="w")
 confirmation_label = ttk.Label(form_frame, text="", font=('Arial', 12), background='white')
 confirmation_label.grid(row=14, column=0, columnspan=2, sticky='nsew')
 
-
 root.mainloop()
