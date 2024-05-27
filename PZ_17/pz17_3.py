@@ -1,7 +1,7 @@
 """перейдите в каталог PZ11. Выведите список всех файлов в этом каталоге. Имена
 вложенных подкаталогов выводить не нужно.
  перейти в корень проекта, создать папку с именем test. В ней создать еще одну папку
-test1.В папку test переместить два файла из ПЗ6, а в папку test1 - один файл из ПЗ7.
+test1. В папку test переместить два файла из ПЗ6, а в папку test1 - один файл из ПЗ7.
 Файл из ПЗ7 переименовать в test.txt. Вывести в консоль информацию о размере
 файлов в папке test.
  перейти в папку с PZ11, найти там файл с самым коротким именем, имя вывести в
@@ -9,7 +9,6 @@ test1.В папку test переместить два файла из ПЗ6, а
  перейти в любую папку где есть отчет в формате .pdf и «запустите» файл в
 привязанной к нему программе. Использовать функцию os.startfile().
  удалить файл test.txt"""
-
 # 1
 import os
 
@@ -27,12 +26,12 @@ for file in files:
 
 # 2
 
-"""os.chdir("..")
-os.makedirs("test/test1")"""
+os.chdir("..")
+os.makedirs("test/test1")
 
-# os.replace(r"C:\Users\Yana\Documents\vedenova is-22\PZ 6\PZ6_1.py", r"C:\Users\Yana\Documents\vedenova is-22\test\PZ6_1.py")
-# os.replace(r"C:\Users\Yana\Documents\vedenova is-22\PZ 6\PZ6_2.py", r"C:\Users\Yana\Documents\vedenova is-22\test\PZ6_2.py")
-# os.replace(r"C:\Users\Yana\Documents\vedenova is-22\PZ 7\PZ7_1.py", r"C:\Users\Yana\Documents\vedenova is-22\test\test1\test.txt")
+os.replace(r"C:\Users\Yana\Documents\vedenova is-22\PZ 6\PZ6_1.py", r"C:\Users\Yana\Documents\vedenova is-22\test\PZ6_1.py")
+os.replace(r"C:\Users\Yana\Documents\vedenova is-22\PZ 6\PZ6_2.py", r"C:\Users\Yana\Documents\vedenova is-22\test\PZ6_2.py")
+os.replace(r"C:\Users\Yana\Documents\vedenova is-22\PZ 7\PZ7_1.py", r"C:\Users\Yana\Documents\vedenova is-22\test\test1\test.txt")
 
 folder_path = "C:/Users/Yana/Documents/vedenova is-22/test"
 
